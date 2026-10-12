@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+  <b>  Lesson3<b></b>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+
+
+
+      function Counter(){
+         const [count,setCount]=React.useState(0);
+  
+     return(
+        <>
+        <p>Hello, welcome to my website</p>
+        <button onClick={()=>
+          {setCount(count+1);
+          console.log("Clicked")
+        }}>  increase {count} {count === 1 ? "time" : "times"}</button>
+
+          <button onClick={()=>
+          { if(count>0){
+            setCount(count-1);
+          }
+          
+            
+          console.log("Clicked")
+        }} disabled= {count===0}
+          >  decrease {count} {count === 1 ? "time" : "times"}</button>
+        
+
+        <button onClick={
+          ()=> setCount(0)
+        }>Reset</button>
+         <p>
+        {count === 0
+          ? "Counter is at zero."
+          : "Counter is running."}
+      </p>
+        </>
+
+
+        
+      );
+     }
+
+
+
+     function TypeSearch(){
+      const [name,setname]=React.useState("");
+      return(
+        <>
+        <p>Enter your name</p>
+        <input value={name} onChange={(event)=>setname(event.target.value)} placeholder="Type Your Name"/>
+        <p>Hello {name} !</p>
+        </>
+      );
+     }
+
+     function LiveCharacter(){
+       const [message,setmessage]=React.useState("");
+      return (
+        <>
+             <p>Have a good day</p>
+        <input  maxLength={10} value={message} onChange={(event)=>setmessage(event.target.value)} placeholder="Type a message"/>
+        <p> message: {message} </p>
+        <p>Characters: {message.length}</p>
+        {message.length > 20 && (
+        <p>⚠️ Message exceeds 20 characters!</p>
+      )}
+      <button onClick={
+        ()=>setmessage("")
+      }>clear</button>
+        </>
+      );
+     }
+
+     function Interactive(){
+     const [show,setshow]=React.useState(false);
+        return (
+          <>
+          {show &&<p>🎉 Hello! The message is visible.</p>}
+          <button onClick={
+            ()=>setshow(!show)
+          }style={{borderRadius:"10px"}}>{show ?"hide message": "show message"}</button>
+        </>
+        );
+     }
+     function App()  {
+    
+      return (
+        <>
+        <Counter/>
+        <Counter/>
+          <p> Interactive preview </p>
+          <Interactive/>
+          <p>Click to test the behavior.</p>
+          <TypeSearch/>
+          <LiveCharacter/>
+        </>
+      )
+    }
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html>

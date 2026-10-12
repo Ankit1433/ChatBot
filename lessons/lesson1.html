@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    Lesson1
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+      var pricepairofSocks = 10;
+      var pricetshirt = 8;
+      var qtysocks = 1;
+      var qtytshirt = 2;
+      var totalCost = pricepairofSocks * qtysocks + pricetshirt * qtytshirt;
+      console.log(totalCost);
+      const button = (
+        <>
+          <div>
+            <button>Good job!</button>
+            <p>My name is Ankit</p>
+          </div>
+          <div>
+            <p>Cotton socks</p>
+            <p>Price: $10</p>
+            <button style={{ borderRadius: "9px" }}>Add to Cart</button>
+          </div>
+
+          <div>
+            <p>
+              Product cost: $
+              {pricepairofSocks * qtysocks + pricetshirt * qtytshirt}
+            </p>
+            <p>Product cost: ${totalCost}</p>
+            <p>{10 + 8}</p>
+            <p> Total: {100 + 200}</p>
+            <p> Total: {10 * 20}</p>
+            <p> Total: {1000 / 10}</p>
+          </div>
+        </>
+      );
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(button);
+    </script>
+  </body>
+</html>

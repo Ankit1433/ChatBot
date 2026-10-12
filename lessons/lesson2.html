@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+  <b>  Lesson2<b></b>
+  </head>
+  <body>
+    <div class="js-container"></div>
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+
+
+
+
+      function WelcomeMessage({isLoggedIn}){
+       return isLoggedIn ? (<div>
+              <p>Welcome back! </p>
+            </div>)
+            :  (<div>
+              <p>Please log in.</p>
+            </div>)
+      }
+      function UserGreeting({name="Guest",age}){
+         
+
+        return (
+          <div>
+            <p>Hello,{name}! </p>
+      {age !== undefined && <p>Age: {age}</p>}
+            </div>
+        );
+      }
+
+      function Product({productName,price}){
+        return(
+        <div>
+            <p>Product Name: {productName}</p>
+            <p>Price: ${price}</p>
+            <button style={{ borderRadius: "9px" }}>Add to Cart</button>
+          </div>
+
+        );
+      }
+      function LoginForm(){
+        return (
+        <div>
+          <div  style={{display:"flex",flexDirection:"column",gap:"10px"}}> <input placeholder="Email"/>
+                <input type="password" placeholder="Password"/> 
+          </div>
+          <div  style={{display:"flex",flexDirection:"row",gap:"10px"}} >
+            <button>Login </button>
+            <button>Sign up </button>
+          </div>
+        </div>
+        );
+      }
+     function App()  {
+       const names = ["Ankit", "Rahul", "Priya"];
+     return(
+        <>
+        <p>Hello, welcome to my website</p>
+        <LoginForm/>
+        <Product productName="Cotton socks" price={10}/>
+        
+        <Product productName="T-shirt" price={8}/>
+        <UserGreeting name="Ankit" age="24"/>
+          <UserGreeting name="Rahul" age="25"/>
+          {names.map((n)=>
+          <UserGreeting  name={n} key={n}/>
+          )}
+          
+          <WelcomeMessage isLoggedIn={true}/>
+        </>
+      );
+     }
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html>
