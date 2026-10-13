@@ -1,55 +1,66 @@
-import { useState } from 'react'
-import {Chatbot} from 'supersimpledev'
-import './ChatInput.css'
+import { useState } from "react";
+import { Chatbot } from "supersimpledev";
+import "./ChatInput.css";
 function ChatInput({ chatMessages, setChatMessages }) {
-        const [inputText, setInputText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [inputText, setInputText] = useState("");
 
-        function saveInputText(event) {
-          setInputText(event.target.value);
-        }
+  function saveInputText(event) {
+    setInputText(event.target.value);
+  }
 
-        async function sendMessage() {
-          // const [isLoading, setIsLoading] = useState(false);
-          const newChatMessages = [
-            ...chatMessages,
-            {
-              message: inputText,
-              sender: "user",
-              id: crypto.randomUUID(),
-            },
-          ];
-          setChatMessages(newChatMessages);
-          // Clear the input immediately.
-          setInputText("");
+  async function SendMessage() {
+    const newChatMessages = [
+      ...chatMessages,
+      {
+        message: inputText,
+        sender: "user",
+        id: crypto.randomUUID(),
+      },
+    ];
+    setChatMessages([
+      ...newChatMessages,
+      {
+        message: "Loading...",
+        sender: "robot",
+        id: "loading",
+      },
+    ]);
+    // Clear the input immediately.
+    setInputText("");
 
-          // Display the loading message.
-          // setIsLoading(true);
-          const response = await Chatbot.getResponseAsync(inputText);
-          setChatMessages([
-            ...newChatMessages,
-            {
-              message: response,
-              sender: "robot",
-              id: crypto.randomUUID(),
-            },
-          ]);
-          
-          // setIsLoading(true);
-        }
-        return (
-          <div className="chat-input-container">
-            <input
-              placeholder="Send a message to Chatbot"
-              size="30"
-              onChange={saveInputText}
-              value={inputText}
-              className="chat-input"
-            />
-            <button onClick={sendMessage} className="send-button">
-              Send
-            </button>
-          </div>
-        );
-      }
+    // Display the loading message.
+    setIsLoading(true);
+    const response = await Chatbot.getResponseAsync(inputText);
+    setChatMessages([
+      ...newChatMessages,
+      {
+        message: response,
+        sender: "robot",
+        id: crypto.randomUUID(),
+      },
+    ]);
 
-export  default ChatInput;      
+    setIsLoading(false);
+  }
+  return (
+    <div className="chat-input-container">
+      <input
+        placeholder="Send a message to Chatbot"
+        size="30"
+        onChange={saveInputText}
+        value={inputText}
+        className="chat-input"
+      />
+      <button
+        onClick={SendMessage}
+        className="send-button"
+        disabled={isLoading || inputText.trim() === ""}
+      >
+        Send
+      </button>
+    </div>
+  );
+}
+
+export default ChatInput;
