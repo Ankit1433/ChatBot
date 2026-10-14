@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Chatbot } from "supersimpledev";
+import Dayjs from "dayjs";
 import "./ChatInput.css";
 function ChatInput({ chatMessages, setChatMessages }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,14 +17,23 @@ function ChatInput({ chatMessages, setChatMessages }) {
         message: inputText,
         sender: "user",
         id: crypto.randomUUID(),
+        time: Dayjs().valueOf(),
       },
     ];
     setChatMessages([
       ...newChatMessages,
       {
-        message: "Loading...",
+        message: (
+          <div>
+            <img
+              style={{ height: "50px", margin: "-15px" }}
+              src="./loading-spinner.gif"
+            ></img>
+          </div>
+        ),
         sender: "robot",
         id: "loading",
+        time: Dayjs().valueOf(),
       },
     ]);
     // Clear the input immediately.
@@ -43,6 +53,10 @@ function ChatInput({ chatMessages, setChatMessages }) {
 
     setIsLoading(false);
   }
+
+  function clearMessage() {
+    setChatMessages([]);
+  }
   return (
     <div className="chat-input-container">
       <input
@@ -58,6 +72,9 @@ function ChatInput({ chatMessages, setChatMessages }) {
         disabled={isLoading || inputText.trim() === ""}
       >
         Send
+      </button>
+      <button onClick={clearMessage} className="clear-button">
+        Clear
       </button>
     </div>
   );
